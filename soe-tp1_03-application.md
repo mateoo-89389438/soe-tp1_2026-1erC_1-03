@@ -6,7 +6,7 @@
 Se pasa un puntero `void *` como cuarto argumento de la funcion `xTaskCreate()`. La tarea lo recibe y lo castea para usarlo.
 
 El parámetro es de tipo puntero a `void *` que se pasa a `xTaskCreate()`. Permite enviar cualquier tipo de dato (int, estructura, arreglo) a la tarea cuando esta se empieza a ejecutar. La tarea recibe ese puntero y los castea al tipo original para usarlo. Es útil para que múltiples instancias de una misma tarea se comporten de forma distinta según el dato que reciban.
-
+```
 int numero = 5;
 xTaskCreate(tarea, "T1", 128, (void*)&numero, 1, NULL);
 
@@ -14,9 +14,9 @@ void tarea(void *parametro) {
     int *num = (int*)parametro;
     // usar *num
 }
-
+```
 ## ¿Cómo cambiar la prioridad de una Tarea ya creada?
-Para cambiar la prioridad de una tarea se usa la funcion `Se usa vTaskPrioritySet()`, que recibe 2 parámetros: el handle (manejador) de la tarea y la nueva prioridad de la forma: 
+Para cambiar la prioridad de una tarea se usa la funcion `vTaskPrioritySet()`, que recibe 2 parámetros: el handle (manejador) de la tarea y la nueva prioridad de la forma: 
     `vTaskPrioritySet(hadleTarea, nuevaPrioridad);` 
 Si se le pasa NULL como manejador, la función cambia la prioridad de la tarea que llama. 
     `vTaskPrioritySet(NULL, nuevaPrioridad);`
