@@ -44,15 +44,17 @@ Para hacer esto se utiliza la función `vTaskDelete(handle)`.
     - Para eliminar *otra tarea*: se le pasa el `TaskHandle_t` de esa tarea.
     - Para hacer que una tarea se elimine a *sí misma*: la tarea debe llamar a `vTaskDelete(NULL)`. Una vez que fue eliminada, el scheduler libera la memoria RAM que estaba usando esa tarea.
 
-# ------------------- # ------------------ # -------------- # ------------------ # -------------- # ------------------ # --------------
-# Paso 03:
+---
+---
+## Paso 03:
 
 ### Prueba A: prioridad de `task_btn` mayor a `task_led`
 **Configuración:**
 * **Prioridad `task_btn`:** `(tskIDLE_PRIORITY + 2ul)`
 * **Prioridad `task_led`:** `(tskIDLE_PRIORITY + 1ul)`
 
-*Resultado*'
+*Resultado Terminal:*
+```
     [info]  
     [info] app_init is running - Tick [mS] =   0
     [info]  RTOS - Event-Triggered Systems (ETS)
@@ -67,6 +69,7 @@ Para hacer esto se utiliza la función `vTaskDelete(handle)`.
     [info]  Task BTN - BTN HOVER
     [info]  Task BTN - BTN PRESSED
     [info]  Task BTN - BTN HOVER
+```
 
 **Observaciones:**
 1.  **Terminal:** Se observa que la tarea del botón se inicializa correctamente y responde a las pulsaciones mostrando los mensajes `Task BTN - BTN PRESSED` y `Task BTN - BTN HOVER`.
@@ -79,13 +82,15 @@ Para hacer esto se utiliza la función `vTaskDelete(handle)`.
 * **Prioridad `task_led`:** `(tskIDLE_PRIORITY + 2ul)`
 * **Prioridad `task_btn`:** `(tskIDLE_PRIORITY + 1ul)`
 
-*Resultado*
+*Resultado Terminal:*
+```
     [info]  
     [info] app_init is running - Tick [mS] =   0
     [info]  RTOS - Event-Triggered Systems (ETS)
     [info]  soe-tp0_03-application: Demo Code
     [info]  
     [info] Task LED is running - Tick [mS] =   0
+```
 
 **Observaciones:**
 1.  **Terminal Serial:** Se observa que el sistema inicia y llega a ejecutar la inicialización de la tarea del LED, mostrando el mensaje `Task LED is running - Tick [mS] = 0`,  pero no aparecen mensajes de la tarea del botón.
@@ -93,15 +98,18 @@ Para hacer esto se utiliza la función `vTaskDelete(handle)`.
 3.  **Estado del Sistema:** El sistema parece estar "congelado" en la tarea del LED, ignorando cualquier entrada del usuario.
 
 
-# ------------------- # ------------------ # -------------- # ------------------ # -------------- # ------------------ # --------------
-# Paso 04:
+---
+---
+
+## Paso 04:
 
 **Configuración y Corrección Previas:**
 * Se crearon tres tareas independientes (`BTN 1`, `BTN 2` y `BTN 3`) apuntando a la misma función base `task_btn`.
 * Se amplió el tamaño del Heap (`TOTAL_HEAP_SIZE`) desde 3072 Bytes (valor default) a 8192 Bytes. Esto fue necesario para evitar que FreeRTOS se quedara sin memoria al intentar alojar el `stack` y el `Task Control Block (TCB)` de las nuevas tareas, lo cual previamente causaba una detención del sistema mediante `configASSERT`.
 * Se agregó la instrucción `vTaskDelete(h_task_btn)` al principio de la inicialización de `task_led`.
 
-*Resultado* 
+*Resultado Terminal:*
+``` 
     [info]  
     [info] app_init is running - Tick [mS] =   0
     [info]  RTOS - Event-Triggered Systems (ETS)
@@ -122,7 +130,7 @@ Para hacer esto se utiliza la función `vTaskDelete(handle)`.
     [info]  Task LED - LED BLINK
     [info]  Task BTN 2 - BTN HOVER
     [info]  Task LED - LED OFF
-
+```
 
 **Observaciones:**
 1. **Eliminación Exitosa:** Al arrancar el sistema, la tarea del LED ejecuta la orden de borrado antes de entrar en su bucle infinito y reporta `Task LED - INSTANCIA BTN 1 ELIMINADA`. Como consecuencia, la instancia "BTN 1" nunca llega a ejecutarse ni a imprimir su log de inicialización.
