@@ -30,10 +30,10 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 
 ### Configuración implementada
 **Modificaciones en el código:**
-- Se declararon dos estructuras `task_btn_dta_t`: `task_btn_1` (para PC13) y `task_btn_2` (para PA0)
+- Se declararon la estructura `task_btn_dta_t` con dos instancias: `task_btn_1` (para PC13) y `task_btn_2` (para PA0)
 - Se modificó `task_btn()` para recibir un puntero a la estructura correspondiente como parámetro
 - Se modificó `task_btn_statechart()` para recibir un puntero a `task_btn_dta_t` y operar sobre él
-- En `app.c` se crearon dos instancias de `task_btn`:
+- En `app.c` se crearon dos instancias de la tarea `task_btn`:
   - `Task BTN 1` → parámetro `(void *)&task_btn_1` → botón interno PC13
   - `Task BTN 2` → parámetro `(void *)&task_btn_2` → botón externo PA0
 
@@ -64,10 +64,10 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 [info]  Task LED - LED OFF
 ```
 
-**Observaciones:**
+**Observaciones:** Como no se tiene un botón externo solo se mantiene la prueba del boton 1.
 1. **Inicialización:** Ambas tareas `Task BTN 1` y `Task BTN 2` se inicializan correctamente, cada una con su propia estructura de datos.
-2. **Detección independiente:** Al presionar el botón interno (PC13), se muestra `Task BTN 1 - BTN PRESSED`. Al presionar el botón externo (PA0), se muestra `Task BTN 2 - BTN PRESSED`. Ambos eventos son detectados por separado.
-3. **Respuesta del LED:** El LED responde correctamente a ambos botones, ejecutando `LED BLINK` y `LED OFF` para cada pulsación.
+2. **Detección independiente:** Al presionar el botón interno (PC13), se muestra `Task BTN 1 - BTN PRESSED`.
+3. **Respuesta del LED:** El LED responde correctamente al boton 1, ejecutando `LED BLINK` y `LED OFF` para cada pulsación.
 4. **Parámetro de tarea:** El uso del parámetro `void *parameters` permite que una misma función `task_btn()` sirva para múltiples instancias, cada una con sus propios datos (puerto, pin, estado, etc.).
 
 
