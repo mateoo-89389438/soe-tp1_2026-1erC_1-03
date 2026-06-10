@@ -23,7 +23,9 @@ Si se le pasa NULL como manejador, la función cambia la prioridad de la tarea q
 Esto permite ajustar dinámicamente la importancia relativa de una tarea durante la ejecución, por ejemplo, elevando la prioridad de una tarea que tiene que responder rápidamente ante un evento.
 
 
-# ------------------- # ------------------ # -------------- # ------------------ # -------------- # ------------------ # --------------
+---
+---
+
 ## Paso 03 - Gestión de dos botones usando parámetro de tarea
 
 ### Configuración implementada
@@ -40,7 +42,8 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 - Conexión: un terminal a **GND**, el otro a **PA0**
 - Configuración: pull-up interno activado (estado normal = HIGH, presionado = LOW)
 
-### Resultado en la terminal
+*Resultado Terminal:*
+```
 [info]  
 [info] app_init is running - Tick [mS] =   0
 [info]  RTOS - Event-Triggered Systems (ETS)
@@ -59,7 +62,7 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 [info]  Task LED - LED BLINK
 [info]  Task BTN 2 - BTN HOVER
 [info]  Task LED - LED OFF
-
+```
 
 **Observaciones:**
 1. **Inicialización:** Ambas tareas `Task BTN 1` y `Task BTN 2` se inicializan correctamente, cada una con su propia estructura de datos.
@@ -68,7 +71,9 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 4. **Parámetro de tarea:** El uso del parámetro `void *parameters` permite que una misma función `task_btn()` sirva para múltiples instancias, cada una con sus propios datos (puerto, pin, estado, etc.).
 
 
-# ------------------- # ------------------ # -------------- # ------------------ # -------------- # ------------------ # --------------
+--- 
+---
+
 ## Paso 04
 
 ### Prioridad de `task_led` mayor que `task_btn`
@@ -77,13 +82,15 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 - **Prioridad `task_led`:** `(tskIDLE_PRIORITY + 2ul)`
 - **Prioridad `task_btn`:** `(tskIDLE_PRIORITY + 1ul)`
 
-**Resultado en la terminal:**
+*Resultado Terminal:*
+```
 [info]
 [info] app_init is running - Tick [mS] = 0
 [info] RTOS - Event-Triggered Systems (ETS)
 [info] soe-tp0_03-application: Demo Code
 [info]
 [info] Task LED is running - Tick [mS] = 0
+```
 
 **Observaciones:**
 1. La tarea `Task LED` se ejecuta primera y exclusivamente.
