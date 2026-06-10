@@ -2,9 +2,14 @@
 
 ## Paso 06: 
 
-## 1. Respuesta de la IA Gemini con el prompt:
+1. Respuesta de la IA Gemini con el prompt:
 
-## Analizar y explicar (en español), el funcionamiento del código fuente contenido en los archivos adjuntos: startup_stm32f103rbtx.s , main.c , stm32f1xx_it.c , FreeRTOSConfig.h y freertos.c . Indicar la evolución de las variables SysTick y SystemCoreClock al ejecutar dicho código fuente desde su inicio ( Reset_Handler : de startup_stm32f103rbtx.s ) hasta el loop principal de la aplicación ( while (1) de main.c ). Indicar el comportamiento del programa al ejecutar dicho código fuente desde su inicio ( Reset_Handler : de startup_stm32f103rbtx.s ) hasta antes de llegar al loop principal de la aplicación ( while (1) de main.c ). Indicar cómo y para qué SysTick y Timer 1 ( TIM2 ) interactúan con FreeRTOS . Indicar cómo y para qué el Timer 4 ( TIM4 ) interactúa con la HAL del proyecto STM32 .
+```
+Analizar y explicar (en español), el funcionamiento del código fuente contenido en los archivos adjuntos: startup_stm32f103rbtx.s , main.c , stm32f1xx_it.c , FreeRTOSConfig.h y freertos.c . 
+Indicar la evolución de las variables SysTick y SystemCoreClock al ejecutar dicho código fuente desde su inicio ( Reset_Handler : de startup_stm32f103rbtx.s ) hasta el loop principal de la aplicación ( while (1) de main.c ). 
+Indicar el comportamiento del programa al ejecutar dicho código fuente desde su inicio ( Reset_Handler : de startup_stm32f103rbtx.s ) hasta antes de llegar al loop principal de la aplicación ( while (1) de main.c ). 
+Indicar cómo y para qué SysTick y Timer 1 ( TIM2 ) interactúan con FreeRTOS . Indicar cómo y para qué el Timer 4 ( TIM4 ) interactúa con la HAL del proyecto STM32 .
+```
 
 A continuación, presento un análisis detallado del código fuente proporcionado, explicando la función de cada archivo, el flujo de ejecución y la interacción de los temporizadores con el sistema operativo y la capa de abstracción de hardware (HAL).
 
@@ -62,14 +67,14 @@ El flujo de ejecución es estrictamente secuencial hasta que arranca el sistema 
 * **Para qué sirve**: La HAL de STM32 requiere una base de tiempo de 1 ms obligatoria para manejar los tiempos muertos (*timeouts*) en funciones de comunicación (ej. esperar a que el UART transmita) y para la función `HAL_Delay()`. Normalmente, la HAL usa el `SysTick`. Como el `SysTick` fue "secuestrado" por FreeRTOS para funcionar como el reloj del sistema operativo, usarlo para la HAL en un entorno multihilo puede generar colisiones e imprecisiones. Por ello, se destina un temporizador de hardware dedicado exclusivo para la HAL.
 * **Cómo interactúa**: Se utiliza el `TIM4` como esta base de tiempo alterna para la HAL. Cuando el `TIM4` genera una interrupción por desbordamiento, el flujo va a `stm32f1xx_it.c`, ejecuta `TIM4_IRQHandler`, pasa por la HAL y finalmente aterriza en el *callback* `HAL_TIM_PeriodElapsedCallback` (ubicado en `main.c`). Allí, el código detecta que la interrupción provino del `TIM4` e invoca `HAL_IncTick()`, la cual incrementa la variable interna `uwTick` de la HAL, manteniendo así las funciones nativas de ST operativas y sincronizadas sin interferir con el núcleo de FreeRTOS.
 
+--- 
+--- 
 
-
-
-
-# -------------------------- # ------------------------- # -------------------------- # ------------------------- # -------------------------- # ------------------------- #
 ## 2. Respuesta de la IA Gemini con el prompt:
 
-## Analizar y explicar (en español), el funcionamiento del código fuente contenido en los archivos adjuntos: app.c , task_btn.c , task_led.c , task_led_interface.c , y freertos.c .
+```
+Analizar y explicar (en español), el funcionamiento del código fuente contenido en los archivos adjuntos: app.c , task_btn.c , task_led.c , task_led_interface.c , y freertos.c .
+```
 
 El código fuente que has compartido corresponde a una aplicación de sistemas embebidos basada en el sistema operativo en tiempo real **FreeRTOS** (probablemente ejecutándose en un microcontrolador STM32, dada la nomenclatura de librerías como `HAL_GPIO_ReadPin`). 
 
