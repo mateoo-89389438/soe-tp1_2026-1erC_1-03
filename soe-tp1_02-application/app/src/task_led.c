@@ -63,7 +63,7 @@ void task_led_statechart();
 /********************** internal data definition *****************************/
 
 /********************** external data declaration ****************************/
-extern TaskHandle_t h_task_btn; // (TP1 – Actividad 02 - paso 04) acceso al handle, para borrar la primera instancia
+extern TaskHandle_t h_task_btn;
 
 /********************** external functions definition ************************/
 /* Task LED thread */
@@ -75,12 +75,11 @@ void task_led(void *parameters)
 
 	HAL_GPIO_WritePin(task_led_dta.gpio_port, task_led_dta.pin, LED_OFF);
 
-	/* Eliminacion de la instancia BTN 1 (TP1 – Actividad 02 - paso 04) */
 	if (h_task_btn != NULL)
 	{
 		vTaskDelete(h_task_btn);
 		LOGGER_INFO(" %s - INSTANCIA BTN 1 ELIMINADA", pcTaskGetName(NULL));
-		h_task_btn = NULL; // handle a NULL despues de borrarlo
+		h_task_btn = NULL;
 	}
 
 	/* As per most tasks, this task is implemented in an infinite loop. */
