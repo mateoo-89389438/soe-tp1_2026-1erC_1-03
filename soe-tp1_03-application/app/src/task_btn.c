@@ -90,10 +90,6 @@ void task_btn(void *parameters)
 
 		/* Run Task Statechart */
     	task_btn_statechart(task_btn_dta);
-
-    	/* Block the task for 20ms to allow processing */
-    	/* periodic, avoid 100% CPU usage and stabilize filtering */
-    	vTaskDelay(pdMS_TO_TICKS(10));
 	}
 }
 
