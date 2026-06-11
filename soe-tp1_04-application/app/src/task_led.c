@@ -89,7 +89,7 @@ void task_led(void *parameters)
 
 void task_led_statechart(void)
 {
-    /*simple periodic behavior (toggle) */
+    /* ← MODIFICADO: comportamiento periódico simple (toggle) */
     HAL_GPIO_TogglePin(task_led_dta.gpio_port, task_led_dta.pin);
 
     /* Print out: Task execution */
