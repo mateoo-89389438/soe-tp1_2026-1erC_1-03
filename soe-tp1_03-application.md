@@ -30,7 +30,7 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 
 ### Configuración implementada
 **Modificaciones en el código:**
-- Se declararon la estructura `task_btn_dta_t` con dos instancias: `task_btn_1` (para PC13) y `task_btn_2` (para PA0)
+- Se declararó la estructura `task_btn_dta_t` con dos instancias: `task_btn_1` para el botón azul (PC13) y `task_btn_2` para el botón externo (PA0)
 - Se modificó `task_btn()` para recibir un puntero a la estructura correspondiente como parámetro
 - Se modificó `task_btn_statechart()` para recibir un puntero a `task_btn_dta_t` y operar sobre él
 - En `app.c` se crearon dos instancias de la tarea `task_btn`:
@@ -53,7 +53,7 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 [info]  
 [info] Task BTN 1 is running - Tick [mS] =   0
 [info]  
-[info] Task BTN 2 is running - Tick [mS] =   1
+[info] Task BTN 2 is running - Tick [mS] =   0
 [info]  Task BTN 1 - BTN PRESSED
 [info]  Task LED - LED BLINK
 [info]  Task BTN 1 - BTN HOVER
@@ -64,9 +64,9 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 [info]  Task LED - LED OFF
 ```
 
-**Observaciones:** Como no se tiene un botón externo solo se mantiene la prueba del boton 1.
+**Observaciones:** 
 1. **Inicialización:** Ambas tareas `Task BTN 1` y `Task BTN 2` se inicializan correctamente, cada una con su propia estructura de datos.
-2. **Detección independiente:** Al presionar el botón interno (PC13), se muestra `Task BTN 1 - BTN PRESSED`.
+2. **Detección independiente:** Al presionar el botón interno (PC13), se muestra `Task BTN 1 - BTN PRESSED` y al presionar el botón externo (PA0), se muestra `Task BTN 2 - BTN PRESSED`.
 3. **Respuesta del LED:** El LED responde correctamente al boton 1, ejecutando `LED BLINK` y `LED OFF` para cada pulsación.
 4. **Parámetro de tarea:** El uso del parámetro `void *parameters` permite que una misma función `task_btn()` sirva para múltiples instancias, cada una con sus propios datos (puerto, pin, estado, etc.).
 
