@@ -85,6 +85,7 @@ void task_btn(void *parameters)
 		/* Print out: Task execution */
 		//LOGGER_INFO(" %s - Tick [mS] = %3d", pcTaskGetName(NULL), (int)xTaskGetTickCount());
 		vTaskDelay(pdMS_TO_TICKS(PERIOD_BTN_MS));
+
 		/* Run Task Statechart */
     	task_btn_statechart();
 	}
