@@ -30,7 +30,7 @@ Esto permite ajustar dinámicamente la importancia relativa de una tarea durante
 
 ### Configuración implementada
 **Modificaciones en el código:**
-- Se declararó la estructura `task_btn_dta_t` con dos instancias: `task_btn_1` para el botón azul (PC13) y `task_btn_2` para el botón externo (PA0)
+- Se declararon instancias de la estructura `task_btn_dta_t`: `task_btn_1` para el botón azul (PC13) y `task_btn_2` para el botón externo (PA0)
 - Se modificó `task_btn()` para recibir un puntero a la estructura correspondiente como parámetro
 - Se modificó `task_btn_statechart()` para recibir un puntero a `task_btn_dta_t` y operar sobre él
 - En `app.c` se crearon dos instancias de la tarea `task_btn`:
