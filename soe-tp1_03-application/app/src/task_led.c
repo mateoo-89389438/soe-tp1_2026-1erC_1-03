@@ -82,10 +82,6 @@ void task_led(void *parameters)
 
 		/* Run Task Statechart */
     	task_led_statechart();
-
-    	/* Block the task for 20ms to allow processing */
-		/* periodic, avoid 100% CPU usage and stabilize filtering */
-		vTaskDelay(20 / portTICK_PERIOD_MS);
 	}
 }
 
