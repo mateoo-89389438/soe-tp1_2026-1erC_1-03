@@ -89,11 +89,14 @@ void task_led(void *parameters)
 
 void task_led_statechart(void)
 {
-    /* ← MODIFICADO: comportamiento periódico simple (toggle) */
+    /*simple periodic behavior (toggle) */
     HAL_GPIO_TogglePin(task_led_dta.gpio_port, task_led_dta.pin);
 
-    /* Log opcional (descomentar si se quiere ver en terminal) */
-    /* LOGGER_INFO(" %s - Toggle LED", pcTaskGetName(NULL)); */
+    /* Print out: Task execution */
+	LOGGER_INFO(" %s - LED BLINK", pcTaskGetName(NULL));
+
+	/* Print out: Task execution */
+	LOGGER_INFO(" %s - LED OFF", pcTaskGetName(NULL));
 }
 
 
